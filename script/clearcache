@@ -1,0 +1,38 @@
+#!/usr/bin/php
+<?php
+/**
+ * MdlBol limpia el directorio de la cache en CLI
+ * 
+ * @author Maikel Nieves Matamoros <mikethewolf83@gmail.com>
+ * @return string
+ */
+
+// directorio de la cache
+$cacheDir = __DIR__ . "/../cache/";
+
+// obtiene todos los nombres de los archivos
+$cacheFiles = glob(__DIR__  . '/../cache/*');
+
+// comprueba que el directorio de la cache no este vacio
+if (!isEmpty($cacheDir)) {
+  foreach ($cacheFiles as $file) { // itera sobre ellos
+
+    if (is_file($file)) {
+      unlink($file); // elimina cada uno
+    }
+  }
+  echo "El directorio de la cache se vació correctamente.";
+} else {
+  echo "El directorio de la cache no contiene archivos. Nada que hacer.";
+}
+
+/**
+ * Comprueba que un directorio no este vacio
+ * 
+ * @param $directory
+ * @return bool
+ */
+function isEmpty($dir)
+{
+  return (($files = @scandir($dir)) && count($files) <= 2);
+}

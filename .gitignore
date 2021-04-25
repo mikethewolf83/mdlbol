@@ -1,0 +1,6 @@
+composer.lock
+cache/*
+database/internal.sqlite3
+pdf/*
+vendor
+.env
