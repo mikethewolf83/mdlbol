@@ -92,6 +92,7 @@ return [
             'controller' => 'MdlBol\Http\Controller\GradesController',
             'action'     => 'genPdfStudent'
         ],
+        // Si no es una de las url anteriores entonces se muestra un error
         '*' => [
             'controller' => 'MdlBol\Http\Controller\HomeController',
             'action'     => 'error'
