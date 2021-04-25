@@ -1,21 +1,21 @@
 # MdlBol: Boletines de Moodle CEEH
 
 ## 1 - Requerimiento lógico necesario
-- PHP 7.3+
-- MariaDB 10.4.13 ó MySQL 5.7
-- SQlite3 3.30+ 
+- PHP 7.3+.
+- MariaDB 10.4.13 ó MySQL 5.7.
+- SQlite3 3.30+.
 
 ### 1.1 - Extensiones de PHP habilitadas
-- Extensión pdo_mysql de PHP
+- Extensión pdo_mysql de PHP.
 - Extensión pdo_sqlite de PHP
-- Extensión gd2 (GD) (para procesamiento de imágenes)
+- Extensión gd2 (GD) (para procesamiento de imágenes).
 
 #### 1.1.1 - Requerimientos de Dompdf
-- Extensión xml de PHP
-- Extensión mbstring de PHP
+- Extensión xml de PHP.
+- Extensión mbstring de PHP.
  
 #### 1.1.2 - Recomendaciones 
-- Tener habilitado OPcache (OPcache, XCache, APC, etc.): mejora el rendimiento considerablemente
+- Tener habilitado OPcache (OPcache, XCache, APC, etc.): mejora el rendimiento considerablemente.
 
 ## 2 - Acciones en la BD
 
