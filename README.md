@@ -4,6 +4,7 @@
 - PHP 7.3+.
 - MariaDB 10.4.13 ó MySQL 5.7.
 - SQlite3 3.30+.
+- Composer 2.0.9+. 
 
 ### 1.1 - Extensiones de PHP habilitadas
 - Extensión pdo_mysql de PHP.
@@ -65,10 +66,15 @@ DB_HOST=localhost
 DB_TYPE=mysql
 DB_OPTIONS="PDO::ATTR_EMULATE_PREPARES => true"
 ```
-### 2.5 - Puesta en producción
+## 3 - Instalación de dependencias de composer (En la raíz de la aplicación ejecutar lo siguiente)
+```bash
+composer install
+```
+
+## 4 - Puesta en producción
 - Finalmente crear un virtual host con el servidor web de producción, de esta forma la aplicación quedará lista para funcionar.
 
-### 2.5 - Observaciones importantes
+## 5 - Observaciones importantes
 - El usuario que corre el servidor web, por ejemplo en Ubuntu es www-data, debe tener permisos de escritura sobre el directorio de la caché, se recomienda ponerlo en 640 (www-data puede leer y escribir, el grupo www-data solo leer).
 ```bash
 user@box$ sudo chown -R www-data:www-data /var/www/html/mdlbol/cache
