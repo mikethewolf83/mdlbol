@@ -26,7 +26,6 @@
 ```bash
 user@box$ cd /var/www/html/mdlbol
 ```
-
 #### 2.1.2 - Crear la BD SQlite3 "internal.sqlite3"
 ```bash
 user@box$ cd /var/www/html/mdlbol
@@ -70,7 +69,6 @@ DB_OPTIONS="PDO::ATTR_EMULATE_PREPARES => true"
 ```bash
 composer install
 ```
-
 ## 4 - Puesta en producción
 - Finalmente crear un virtual host con el servidor web de producción, de esta forma la aplicación quedará lista para funcionar.
 
