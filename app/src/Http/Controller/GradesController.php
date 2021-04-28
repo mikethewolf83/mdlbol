@@ -650,7 +650,7 @@ class GradesController extends AbstractController
                 $dompdf->getOptions()->setIsRemoteEnabled(TRUE);
                 $dompdf->getOptions()->set('isHtml5ParserEnabledd' . TRUE);
                 $dompdf->getOptions()->set('isPhpEnabledd' . TRUE);
-                $dompdf->getOptions()->setChroot(APPDIR . '/public/');
+                $dompdf->getOptions()->setChroot(PUBLIC_DIR);
                 $dompdf->loadHtml($html);
                 $dompdf->setPaper('letter', 'landscape');
                 $dompdf->render();
@@ -757,7 +757,7 @@ class GradesController extends AbstractController
                 $dompdf->getOptions()->setIsRemoteEnabled(TRUE);
                 $dompdf->getOptions()->set('isHtml5ParserEnabledd' . TRUE);
                 $dompdf->getOptions()->set('isPhpEnabledd' . TRUE);
-                $dompdf->getOptions()->setChroot(APPDIR . '/public/');
+                $dompdf->getOptions()->setChroot(PUBLIC_DIR);
                 $dompdf->loadHtml($html);
                 $dompdf->setPaper('letter', 'landscape');
                 $dompdf->render();
@@ -878,7 +878,7 @@ class GradesController extends AbstractController
                     $dompdf->getOptions()->setIsRemoteEnabled(TRUE);
                     $dompdf->getOptions()->set('isHtml5ParserEnabledd' . TRUE);
                     $dompdf->getOptions()->set('isPhpEnabledd' . TRUE);
-                    $dompdf->getOptions()->setChroot(APPDIR . '/public/');
+                    $dompdf->getOptions()->setChroot(PUBLIC_DIR);
                     $dompdf->loadHtml($html);
                     $dompdf->setPaper('letter', 'landscape');
                     $dompdf->render();
@@ -889,7 +889,7 @@ class GradesController extends AbstractController
                 } 
 
                 // Archivo zip
-                $zipfile = APPDIR . '/public/' . $group . "_Boletines_Asignaturas.zip";
+                $zipfile = PUBLIC_DIR . $group . "_Boletines_Asignaturas.zip";
 
                 // Si existe el archivo \
                 // (quedó por algún error HTTP o el usuario detuvo la carga en el navegador) \
@@ -1044,7 +1044,7 @@ class GradesController extends AbstractController
                     $dompdf->getOptions()->setIsRemoteEnabled(TRUE);
                     $dompdf->getOptions()->set('isHtml5ParserEnabledd' . TRUE);
                     $dompdf->getOptions()->set('isPhpEnabledd' . TRUE);
-                    $dompdf->getOptions()->setChroot(APPDIR . '/public/');
+                    $dompdf->getOptions()->setChroot(PUBLIC_DIR);
                     $dompdf->loadHtml($html);
                     $dompdf->setPaper('letter', 'landscape');
                     $dompdf->render();
@@ -1054,7 +1054,7 @@ class GradesController extends AbstractController
                     file_put_contents($pdfDir . $group . '_' . $data->getStudentName($student['id'])['username'] . '.pdf', $output);
                 }
                 // Archivo zip
-                $zipfile = APPDIR . '/public/' . $group . "_Boletines_Estudiantes.zip";
+                $zipfile = PUBLIC_DIR . $group . "_Boletines_Estudiantes.zip";
 
                 // Si existe el archivo \
                 // (quedó por algún error HTTP o el usuario detuvo la carga en el navegador) \
