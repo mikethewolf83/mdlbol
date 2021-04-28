@@ -1,4 +1,5 @@
 composer.lock
 database/internal.sqlite3
+cache/*
 vendor
 .env
