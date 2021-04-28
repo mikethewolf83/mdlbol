@@ -9,7 +9,8 @@ $autoloader->addPsr4('MdlBol\\', __DIR__ . '/../app/src');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-define('APPDIR', dirname(dirname(__FILE__)));
+define('APPDIR', dirname(__DIR__));
+define('PUBLIC_DIR', __DIR__);
 define('BASE_URL', 'http://localhost:8000');
 define('VERSION', file_get_contents(APPDIR . '/VERSION'));
 define('VIEW_HEADER', APPDIR . '/app/view/layouts/header.php');
