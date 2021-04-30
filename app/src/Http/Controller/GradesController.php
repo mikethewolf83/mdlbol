@@ -583,6 +583,9 @@ class GradesController extends AbstractController
             $campusGroup = $campus . '/' . $group;
             $groupCourse = $group . '/course/' . $course;
 
+            // El servidor web y PHP deben esperar a que se generen los boletines
+            set_time_limit(0);
+
             if ($this->translateTrim($trim) && $this->parseCampus($campus) && $this->parseGroup($group) && $this->parseCampusGroup($campusGroup) && $this->parseGroupCourse($groupCourse) && $course && $studentsUri) {
 
                 $trim = $this->translateTrim($trim);
@@ -696,6 +699,9 @@ class GradesController extends AbstractController
             // URI completa
             $campusGroup = $campus . '/' . $group;
 
+            // El servidor web y PHP deben esperar a que se generen los boletines
+            set_time_limit(0);
+
             if ($this->translateTrim($trim) && $this->parseCampus($campus) && $this->parseGroup($group) && $this->parseCampusGroup($campusGroup) && $student) {
                 $trim = $this->translateTrim($trim);
                 $group = $this->parseGroup($group);
@@ -797,6 +803,9 @@ class GradesController extends AbstractController
             $group = $this->request()->getSegment(2);
 
             $campusGroup = $campus . '/' . $group;
+
+            // El servidor web y PHP deben esperar a que se generen los boletines
+            set_time_limit(0);
 
             if ($this->translateTrim($trim) && $this->parseCampus($campus) && $this->parseGroup($group) && $this->parseCampusGroup($campusGroup)) {
                 $trim = $this->translateTrim($trim);
@@ -967,6 +976,9 @@ class GradesController extends AbstractController
             $group = $this->request()->getSegment(2);
 
             $campusGroup = $campus . '/' . $group;
+
+            // El servidor web y PHP deben esperar a que se generen los boletines
+            set_time_limit(0);
 
             // Mostrar las notas si la sede y el trimestre devuelven datos
             if ($this->translateTrim($trim) && $this->parseCampus($campus) && $this->parseGroup($group) && $this->parseCampusGroup($campusGroup)) {

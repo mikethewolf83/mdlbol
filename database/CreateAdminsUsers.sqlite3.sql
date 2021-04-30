@@ -25,3 +25,15 @@ INSERT INTO "mb_admin_user" (
 ) VALUES (
     "maikel.nieves"
 );
+
+INSERT INTO "mb_normal_user" (
+    "username"
+) VALUES (
+    "angel.perez"
+);
+
+INSERT INTO "mb_normal_user" (
+    "username"
+) VALUES (
+    "maikel.nieves"
+);

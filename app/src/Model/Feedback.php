@@ -28,13 +28,13 @@ class Feedback extends AbstractModel
 
     public function getFeedbackMdl($trim, $campus, $group, $course, $student)
     {
-        $this->db->prepare('SELECT `mdl_grade_grades`.`id`, `mdl_grade_grades`.`feedback` FROM `pivotnotas` JOIN `cohorts_users` ON(`cohorts_users`.`id` = `pivotnotas`.`userid`) JOIN `cursoprofesores` ON(`pivotnotas`.`courseid` = `cursoprofesores`.`CursoId`) JOIN `mdl_grade_items` ON(`pivotnotas`.`courseid` = `mdl_grade_items`.`courseid`) JOIN `mdl_grade_grades` ON(`pivotnotas`.`userid` = `mdl_grade_grades`.`userid`) WHERE (`pivotnotas`.`Trimestre` = ?) AND(`cursoprofesores`.`ParentCatCurso` = ?) AND(`cohorts_users`.`Cohorte` = ?) AND(`cursoprofesores`.`CursoId` = ?) AND(`pivotnotas`.`NotaTrimestre` != "") AND(`pivotnotas`.`TrimestreObservaciones` != "") AND(`mdl_grade_items`.`id` = `mdl_grade_grades`.`itemid`) AND(`pivotnotas`.`TrimestreObservaciones` = `mdl_grade_grades`.`feedback`) AND(`mdl_grade_grades`.`userid` = ?)');
+        $this->db->prepare('SELECT `mdl_grade_grades`.`id`, `mdl_grade_grades`.`feedback` FROM `PivotNotas` JOIN `COHORTS_USERS` ON(`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON(`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) JOIN `mdl_grade_items` ON(`PivotNotas`.`courseid` = `mdl_grade_items`.`courseid`) JOIN `mdl_grade_grades` ON(`PivotNotas`.`userid` = `mdl_grade_grades`.`userid`) WHERE (`PivotNotas`.`Trimestre` = ?) AND(`CursoProfesores`.`ParentCatCurso` = ?) AND(`COHORTS_USERS`.`Cohorte` = ?) AND(`CursoProfesores`.`CursoId` = ?) AND(`PivotNotas`.`NotaTrimestre` != "") AND(`PivotNotas`.`TrimestreObservaciones` != "") AND(`mdl_grade_items`.`id` = `mdl_grade_grades`.`itemid`) AND(`PivotNotas`.`TrimestreObservaciones` = `mdl_grade_grades`.`feedback`) AND(`mdl_grade_grades`.`userid` = ?)');
 
         $params = [
-            'pivotnotas.Trimestre'           => $trim,
-            'cursoprofesores.ParentCatCurso' => $campus,
-            'cohorts_users.Cohorte'          => $group,
-            'cursoprofesores.CursoId'        => $course,
+            'PivotNotas.Trimestre'           => $trim,
+            'CursoProfesores.ParentCatCurso' => $campus,
+            'COHORTS_USERS.Cohorte'          => $group,
+            'CursoProfesores.CursoId'        => $course,
             'mdl_grade_grades.userid'        => $student
         ];
         $this->db->bindParams($params);

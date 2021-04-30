@@ -52,7 +52,11 @@ user@box$ sudo crontab -e
 ```bash
 user@box$ cp .env.example .env
 ```
-#### 2.4.1 - Editar el archivo ".env" ajustar (DB_NAME, DB_USER, DB_PASSWORD) con los valores reales y respetando las demás opciones ya establecidas
+#### 2.4.1 - Editar el archivo ".env" ajustar (DB_NAME, DB_USER, DB_PASSWORD, BASE_URL) con los valores reales y respetando las demás opciones ya establecidas.
+
+* Prestar especial atención a la variable de entrono BASE_URL, si no se establece correctamente esta variable con la URL de la aplicación se producirán errores. En el entorno de desarrollo local debe tener este valor "http://localhost:8000"
+
+
 ```bash
 user@box$ nano .env
 ```
@@ -64,7 +68,9 @@ DB_PASSWORD=yourdbpasswd
 DB_HOST=localhost
 DB_TYPE=mysql
 DB_OPTIONS="PDO::ATTR_EMULATE_PREPARES => true"
+BASE_URL="http://application.url"
 ```
+
 ## 3 - Instalación de dependencias de composer (En la raíz de la aplicación ejecutar lo siguiente)
 ```bash
 composer install

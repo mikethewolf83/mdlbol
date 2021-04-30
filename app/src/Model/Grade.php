@@ -32,9 +32,9 @@ class Grade extends AbstractModel
     public function getCoursesInGroup($group)
     {
         $group = preg_replace('/^[1-9](?=[A-Z])/', '$0 ', $group);
-        $this->db->prepare('SELECT `cursoprofesores`.`CursoId`, `cursoprofesores`.`Curso` FROM `cursoprofesores` WHERE `cursoprofesores`.`CursoId` IN (SELECT DISTINCT `pivotnotas`.`courseid` FROM `pivotnotas`) AND `cursoprofesores`.`CatCurso` = ? AND `cursoprofesores`.`Curso` NOT LIKE "Tutoría%" AND `cursoprofesores`.`Curso` NOT LIKE "Orientación Educativa%" AND `cursoprofesores`.`Curso` NOT LIKE "%Lector%" ORDER BY `Curso` ASC');
+        $this->db->prepare('SELECT `CursoProfesores`.`CursoId`, `CursoProfesores`.`Curso` FROM `CursoProfesores` WHERE `CursoProfesores`.`CursoId` IN (SELECT DISTINCT `PivotNotas`.`courseid` FROM `PivotNotas`) AND `CursoProfesores`.`CatCurso` = ? AND `CursoProfesores`.`Curso` NOT LIKE "Tutoría%" AND `CursoProfesores`.`Curso` NOT LIKE "Orientación Educativa%" AND `CursoProfesores`.`Curso` NOT LIKE "%Lector%" ORDER BY `Curso` ASC');
 
-        $params = ['cursoprofesores.CatCurso' => $group];
+        $params = ['CursoProfesores.CatCurso' => $group];
         $this->db->bindParams($params);
         $this->db->execute();
         return $this->db->fetchAll();
@@ -42,9 +42,9 @@ class Grade extends AbstractModel
 
     public function getStudentsInGroup($group)
     {
-        $this->db->prepare('SELECT `cohorts_users`.`id`, `cohorts_users`.`Cohorte`, CONCAT(`cohorts_users`.`firstname`, " ", `cohorts_users`.`lastname`) AS username FROM `cohorts_users` WHERE `cohorts_users`.`id` IN (SELECT DISTINCT `pivotnotas`.`userid` FROM `pivotnotas`) AND `cohorts_users`.`Cohorte` = ? ORDER BY username ASC');
+        $this->db->prepare('SELECT `COHORTS_USERS`.`id`, `COHORTS_USERS`.`Cohorte`, CONCAT(`COHORTS_USERS`.`firstname`, " ", `COHORTS_USERS`.`lastname`) AS username FROM `COHORTS_USERS` WHERE `COHORTS_USERS`.`id` IN (SELECT DISTINCT `PivotNotas`.`userid` FROM `PivotNotas`) AND `COHORTS_USERS`.`Cohorte` = ? ORDER BY username ASC');
 
-        $params = ['cohorts_users.Cohorte' => $group];
+        $params = ['COHORTS_USERS.Cohorte' => $group];
         $this->db->bindParams($params);
         $this->db->execute();
         return $this->db->fetchAll();
@@ -54,13 +54,13 @@ class Grade extends AbstractModel
     /* BEGIN Por asignatura */
     public function getTrimCampusGroupCourse($trim, $campus, $group, $course)
     {
-        $this->db->prepare('SELECT `pivotnotas`.*, `cohorts_users`.*, `cursoprofesores`.* FROM `pivotnotas` JOIN `cohorts_users` ON (`cohorts_users`.`id` = `pivotnotas`.`userid`) JOIN `cursoprofesores` ON (`pivotnotas`.`courseid` = `cursoprofesores`.`CursoId`) WHERE(`pivotnotas`.`Trimestre` = ?) AND (`cursoprofesores`.`ParentCatCurso` = ?)  AND (`cohorts_users`.`Cohorte` = ?)  AND (`cursoprofesores`.`CursoId` = ?) AND (`pivotnotas`.`NotaTrimestre` != "") AND (`pivotnotas`.`TrimestreObservaciones` != "")');
+        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`CursoProfesores`.`CursoId` = ?) AND (`PivotNotas`.`NotaTrimestre` != "") AND (`PivotNotas`.`TrimestreObservaciones` != "")');
 
         $params = [
-            'pivotnotas.Trimestre'           => $trim,
-            'cursoprofesores.ParentCatCurso' => $campus,
-            'cohorts_users.Cohorte'          => $group,
-            'cursoprofesores.CursoId'        => $course
+            'PivotNotas.Trimestre'           => $trim,
+            'CursoProfesores.ParentCatCurso' => $campus,
+            'COHORTS_USERS.Cohorte'          => $group,
+            'CursoProfesores.CursoId'        => $course
         ];
         $this->db->bindParams($params);
         $this->db->execute();
@@ -69,9 +69,9 @@ class Grade extends AbstractModel
 
     public function getCourseName($course)
     {
-        $this->db->prepare('SELECT `cursoprofesores`.`CursoId`, `cursoprofesores`.`Curso` FROM `cursoprofesores` WHERE `cursoprofesores`.`CursoId` = ? LIMIT 1');
+        $this->db->prepare('SELECT `CursoProfesores`.`CursoId`, `CursoProfesores`.`Curso` FROM `CursoProfesores` WHERE `CursoProfesores`.`CursoId` = ? LIMIT 1');
 
-        $params = ['cursoprofesores.CursoId' => $course];
+        $params = ['CursoProfesores.CursoId' => $course];
         $this->db->bindParams($params);
         $this->db->execute();
 
@@ -84,9 +84,9 @@ class Grade extends AbstractModel
 
     public function getCoursesInCampus($campus)
     {
-        $this->db->prepare('SELECT `cursoprofesores`.`CursoId` FROM `cursoprofesores` WHERE `cursoprofesores`.`ParentCatCurso` = ?');
+        $this->db->prepare('SELECT `CursoProfesores`.`CursoId` FROM `CursoProfesores` WHERE `CursoProfesores`.`ParentCatCurso` = ?');
 
-        $params = ['cursoprofesores.ParentCatCurso' => $campus];
+        $params = ['CursoProfesores.ParentCatCurso' => $campus];
         $this->db->bindParams($params);
         $this->db->execute();
         return $this->db->fetchAll();
@@ -94,9 +94,9 @@ class Grade extends AbstractModel
 
     public function getStudentsInCourse($course)
     {
-        $this->db->prepare('SELECT `pivotnotas`.`userid` FROM `pivotnotas` WHERE `pivotnotas`.`courseid` = ?');
+        $this->db->prepare('SELECT `PivotNotas`.`userid` FROM `PivotNotas` WHERE `PivotNotas`.`courseid` = ?');
 
-        $params = ['pivotnotas.courseid' => $course];
+        $params = ['PivotNotas.courseid' => $course];
         $this->db->bindParams($params);
         $this->db->execute();
         return $this->db->fetchAll();
@@ -106,13 +106,13 @@ class Grade extends AbstractModel
     /* BEGIN Por estudiante */
     public function getTrimCampusGroupStudent($trim, $campus, $group, $student)
     {
-        $this->db->prepare('SELECT `pivotnotas`.*, `cohorts_users`.*, `cursoprofesores`.* FROM `pivotnotas` JOIN `cohorts_users` ON (`cohorts_users`.`id` = `pivotnotas`.`userid`) JOIN `cursoprofesores` ON (`pivotnotas`.`courseid` = `cursoprofesores`.`CursoId`) WHERE(`pivotnotas`.`Trimestre` = ?) AND (`cursoprofesores`.`ParentCatCurso` = ?)  AND (`cohorts_users`.`Cohorte` = ?)  AND (`cohorts_users`.`id` = ?) AND (`pivotnotas`.`NotaTrimestre` != "") AND (`pivotnotas`.`TrimestreObservaciones` != "")');
+        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`COHORTS_USERS`.`id` = ?) AND (`PivotNotas`.`NotaTrimestre` != "") AND (`PivotNotas`.`TrimestreObservaciones` != "")');
 
         $params = [
-            'pivotnotas.Trimestre'           => $trim,
-            'cursoprofesores.ParentCatCurso' => $campus,
-            'cohorts_users.Cohorte'          => $group,
-            'cursoprofesores.CursoId'        => $student
+            'PivotNotas.Trimestre'           => $trim,
+            'CursoProfesores.ParentCatCurso' => $campus,
+            'COHORTS_USERS.Cohorte'          => $group,
+            'CursoProfesores.CursoId'        => $student
         ];
         $this->db->bindParams($params);
         $this->db->execute();
@@ -121,9 +121,9 @@ class Grade extends AbstractModel
 
     public function getStudentName($student)
     {
-        $this->db->prepare('SELECT CONCAT(`cohorts_users`.`firstname`, " ", `cohorts_users`.`lastname`) AS username FROM `cohorts_users` WHERE `cohorts_users`.`id` = ? LIMIT 1');
+        $this->db->prepare('SELECT CONCAT(`COHORTS_USERS`.`firstname`, " ", `COHORTS_USERS`.`lastname`) AS username FROM `COHORTS_USERS` WHERE `COHORTS_USERS`.`id` = ? LIMIT 1');
 
-        $params = ['cohorts_users.id' => $student];
+        $params = ['COHORTS_USERS.id' => $student];
         $this->db->bindParams($params);
         $this->db->execute();
 
@@ -138,7 +138,7 @@ class Grade extends AbstractModel
     /* BEGIN Dashborad */
     public function getStudentsAmountCampus($campus)
     {
-        $this->db->prepare("SELECT COUNT(`id`) AS count FROM `cohorts_users` WHERE `Cohorte` LIKE ? LIMIT 1");
+        $this->db->prepare("SELECT COUNT(`id`) AS count FROM `COHORTS_USERS` WHERE `Cohorte` LIKE ? LIMIT 1");
 
         $params = ['Cohorte' => "%$campus"];
         $this->db->bindParams($params);
@@ -148,9 +148,9 @@ class Grade extends AbstractModel
 
     public function getCoursesAmountCampus($campus)
     {
-        $this->db->prepare('SELECT COUNT(`cursoprofesores`.`CursoId`) AS count FROM `cursoprofesores` WHERE `cursoprofesores`.`ParentCatCurso` = ? LIMIT 1');
+        $this->db->prepare('SELECT COUNT(`CursoProfesores`.`CursoId`) AS count FROM `CursoProfesores` WHERE `CursoProfesores`.`ParentCatCurso` = ? LIMIT 1');
 
-        $params = ['cursoprofesores.ParentCatCurso' => $campus];
+        $params = ['CursoProfesores.ParentCatCurso' => $campus];
         $this->db->bindParams($params);
         $this->db->execute();
         return $this->db->fetch();
