@@ -11,7 +11,7 @@ $dotenv->load();
 
 define('APPDIR', dirname(__DIR__));
 define('PUBLIC_DIR', __DIR__);
-define('BASE_URL', 'http://localhost:8000');
+define('BASE_URL', $_ENV['BASE_URL']);
 define('VERSION', file_get_contents(APPDIR . '/VERSION'));
 define('VIEW_HEADER', APPDIR . '/app/view/layouts/header.php');
 define('VIEW_FOOTER', APPDIR . '/app/view/layouts/footer.php');
