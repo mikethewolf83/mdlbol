@@ -206,6 +206,7 @@ class GradesController extends AbstractController
                 $this->view->courseUri = $courseUri;
                 $this->view->total = count($this->view->grades);
                 $this->view->uri = $uri;
+                $this->view->campus = $campus;
                 $this->send();
             }
         } else {
