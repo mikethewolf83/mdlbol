@@ -113,7 +113,7 @@ class Feedback extends AbstractModel
     {
         // $this->db->prepare("SELECT `mdl_user_id`, `mdl_course_id` FROM `mdlbol_feedback_cidead` WHERE `mdl_user_id` = ? AND `mdl_course_id` = ?");
 
-        $this->db->prepare("SELECT COUNT(*) AS `count` FROM `mdlbol_feedback_cidead` WHERE `mdl_user_id` = ? AND `mdl_course_id` = ?");
+        $this->db->prepare("SELECT COUNT(*) AS `cuenta` FROM `mdlbol_feedback_cidead` WHERE `mdl_user_id` = ? AND `mdl_course_id` = ?");
 
         $params = [
             'mdl_user_id'   => $student,

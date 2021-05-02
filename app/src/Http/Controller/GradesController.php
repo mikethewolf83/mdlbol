@@ -113,6 +113,10 @@ class GradesController extends AbstractController
                 // $this->view->filterHtml = new Filter('strip_tags'); // Filtra todo el html en forma de '<tag> </tag>' que venga en los comentarios
                 // $this->view->filterHtml = new Filter('htmlentities', [ENT_QUOTES, 'UTF-8']); // Filtra todo el html que venga en los comentarios y lo convierte a texto plano
                 $this->view->grades = $dataGrade->getTrimCampusGroupCourse($trim, $campus, $group, $course);
+                $this->view->coursesWithU5 = $dataGrade->getCoursesWithU5($trim);
+                $this->view->coursesWithU4 = $dataGrade->getCoursesWithU4($trim);
+                $this->view->coursesWithU3 = $dataGrade->getCoursesWithU3($trim);
+                $this->view->colspan = 3;
                 $this->view->dataFeedback = $dataFeedback;
                 $this->view->trim = $trim;
                 $this->view->campus = $campus;

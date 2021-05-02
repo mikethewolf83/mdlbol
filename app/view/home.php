@@ -12,7 +12,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-primary-dark"><?= $countStudEP['count']; ?></p>
+                        <p class="title has-text-primary-dark"><?= $countStudEP['cuenta']; ?></p>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-info-dark"><?= $countStudESO['count']; ?></p>
+                        <p class="title has-text-info-dark"><?= $countStudESO['cuenta']; ?></p>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-warning-dark"><?= $countStudBACH['count']; ?></p>
+                        <p class="title has-text-warning-dark"><?= $countStudBACH['cuenta']; ?></p>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-primary-dark"><?= $countCoursesEP['count']; ?></p>
+                        <p class="title has-text-primary-dark"><?= $countCoursesEP['cuenta']; ?></p>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-info-dark"><?= $countCoursesESO['count']; ?></p>
+                        <p class="title has-text-info-dark"><?= $countCoursesESO['cuenta']; ?></p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="level-right">
                     <div class="level-item">
-                        <p class="title has-text-warning-dark"><?= $countCoursesBACH['count']; ?></p>
+                        <p class="title has-text-warning-dark"><?= $countCoursesBACH['cuenta']; ?></p>
                     </div>
                 </div>
             </div>

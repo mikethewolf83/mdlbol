@@ -4,7 +4,6 @@ namespace MdlBol\Model;
 
 use Pop\Db\Db;
 use Pop\Model\AbstractModel;
-use MdlBol\Controller\AbstractController as Ac;
 use MdlBol\Exception;
 
 class Grade extends AbstractModel
@@ -54,7 +53,7 @@ class Grade extends AbstractModel
     /* BEGIN Por asignatura */
     public function getTrimCampusGroupCourse($trim, $campus, $group, $course)
     {
-        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`CursoProfesores`.`CursoId` = ?) AND (`PivotNotas`.`NotaTrimestre` != "") AND (`PivotNotas`.`TrimestreObservaciones` != "")');
+        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`CursoProfesores`.`CursoId` = ?) AND (`PivotNotas`.`NotaTrimestre` != "")');
 
         $params = [
             'PivotNotas.Trimestre'           => $trim,
@@ -101,12 +100,42 @@ class Grade extends AbstractModel
         $this->db->execute();
         return $this->db->fetchAll();
     }
+
+    public function getCoursesWithU3($trim)
+    {
+        $this->db->prepare('SELECT DISTINCT `courseid` FROM `PivotNotas` WHERE `U3_NotaFinal` IS NOT NULL AND `Trimestre` = ?');
+
+        $params = ['Trimestre`' => $trim];
+        $this->db->bindParams($params);
+        $this->db->execute();
+        return $this->db->fetchAll();
+    }
+
+    public function getCoursesWithU4($trim)
+    {
+        $this->db->prepare('SELECT DISTINCT `courseid` FROM `PivotNotas` WHERE `U4_NotaFinal` IS NOT NULL AND `Trimestre` = ?');
+
+        $params = ['Trimestre`' => $trim];
+        $this->db->bindParams($params);
+        $this->db->execute();
+        return $this->db->fetchAll();
+    }
+
+    public function getCoursesWithU5($trim)
+    {
+        $this->db->prepare('SELECT DISTINCT `courseid` FROM `PivotNotas` WHERE `U5_NotaFinal` IS NOT NULL AND `Trimestre` = ?');
+
+        $params = ['Trimestre`' => $trim];
+        $this->db->bindParams($params);
+        $this->db->execute();
+        return $this->db->fetchAll();
+    }
     /* END Por asignatura */
 
     /* BEGIN Por estudiante */
     public function getTrimCampusGroupStudent($trim, $campus, $group, $student)
     {
-        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`COHORTS_USERS`.`id` = ?) AND (`PivotNotas`.`NotaTrimestre` != "") AND (`PivotNotas`.`TrimestreObservaciones` != "")');
+        $this->db->prepare('SELECT `PivotNotas`.*, `COHORTS_USERS`.*, `CursoProfesores`.* FROM `PivotNotas` JOIN `COHORTS_USERS` ON (`COHORTS_USERS`.`id` = `PivotNotas`.`userid`) JOIN `CursoProfesores` ON (`PivotNotas`.`courseid` = `CursoProfesores`.`CursoId`) WHERE(`PivotNotas`.`Trimestre` = ?) AND (`CursoProfesores`.`ParentCatCurso` = ?)  AND (`COHORTS_USERS`.`Cohorte` = ?)  AND (`COHORTS_USERS`.`id` = ?) AND (`PivotNotas`.`NotaTrimestre` != "")');
 
         $params = [
             'PivotNotas.Trimestre'           => $trim,
@@ -138,7 +167,7 @@ class Grade extends AbstractModel
     /* BEGIN Dashborad */
     public function getStudentsAmountCampus($campus)
     {
-        $this->db->prepare("SELECT COUNT(`id`) AS count FROM `COHORTS_USERS` WHERE `Cohorte` LIKE ? LIMIT 1");
+        $this->db->prepare("SELECT COUNT(`id`) AS cuenta FROM `COHORTS_USERS` WHERE `Cohorte` LIKE ? LIMIT 1");
 
         $params = ['Cohorte' => "%$campus"];
         $this->db->bindParams($params);
@@ -148,7 +177,7 @@ class Grade extends AbstractModel
 
     public function getCoursesAmountCampus($campus)
     {
-        $this->db->prepare('SELECT COUNT(`CursoProfesores`.`CursoId`) AS count FROM `CursoProfesores` WHERE `CursoProfesores`.`ParentCatCurso` = ? LIMIT 1');
+        $this->db->prepare('SELECT COUNT(`CursoProfesores`.`CursoId`) AS cuenta FROM `CursoProfesores` WHERE `CursoProfesores`.`ParentCatCurso` = ? LIMIT 1');
 
         $params = ['CursoProfesores.ParentCatCurso' => $campus];
         $this->db->bindParams($params);
