@@ -96,7 +96,12 @@ class Feedback extends AbstractModel
         $stmt->bindValue(':userid', $student);
         return $stmt->execute();*/
 
-        $gradesId = $this->getFeedbackMdl($trim, $campus, $group, $course, $student)['id'];
+        // $gradesId = $this->getFeedbackMdl($trim, $campus, $group, $course, $student)['id'];
+        if ($this->getFeedbackMdl($trim, $campus, $group, $course, $student) == 0) {
+            $gradesId = '';
+        } else {
+            $gradesId = $this->getFeedbackMdl($trim, $campus, $group, $course, $student)['id'];
+        }
 
         $this->db->prepare("SELECT `feedback_cidead` FROM `mdlbol_feedback_cidead` WHERE `mdl_grade_grades_id` = ? AND `mdl_user_id` = ?");
 

@@ -925,6 +925,9 @@ class GradesController extends AbstractController
                     $courseText = '<b>Asignatura:</b> ' . $dataGrade->getCourseName($course['CursoId'])['Curso'];
                     $groupText = '<b>Grupo:</b> ' . $group;
                     $title = 'CEEH ' . $trimText . ' ' . $dataGrade->getCourseName($course['CursoId'])['Curso'];
+                    $coursesWithU5 = $dataGrade->getCoursesWithU5($trim);
+                    $coursesWithU4 = $dataGrade->getCoursesWithU4($trim);
+                    $coursesWithU3 = $dataGrade->getCoursesWithU3($trim);
 
                     $html = '<html>';
                     $html .= '<head>';
@@ -952,24 +955,67 @@ class GradesController extends AbstractController
                     $html .= '<h5 id="groupText" class="subtitle is-6 has-text-dark">' . $groupText  . '</h5>';
                     $html .= '<table class="table is-fullwidth">';
                     $html .= '<thead>';
-                    $html .= '<tr>';
-                    $html .= '<th class="has-text-left" style="width: 25%;">Nombre y Apellidos</th>';
-                    $html .= '<th style="width: 15%;">Calificación</th>';
-                    $html .= '<th>Comentario</th>';
-                    $html .= '</tr>';
+                    if (($campus == 'eso') || ($campus == 'bach')) {
+                        $html .= '<tr>';
+                        $html .= '<th class="has-text-left" style="width: 25%;">Nombre y Apellidos</th>';
+                        $html .= '<th class="has-text-centered">U1</th>';
+                        $html .= '<th class="has-text-centered">U2</th>';
+                        if (in_array($course['CursoId'], array_column((array)$coursesWithU3, 'courseid'))) {
+                            $html .= '<th class="has-text-centered">U3</th>';
+                        }
+                        if (in_array($course['CursoId'], array_column((array)$coursesWithU4, 'courseid'))) {
+                            $html .= '<th class="has-text-centered">U4</th>';
+                        }
+                        if (in_array($course['CursoId'], array_column((array)$coursesWithU5, 'courseid'))) {
+                            $html .= '<th class="has-text-centered">U5</th>';
+                        }
+                        $html .= '<th>Calificación</th>';
+                        $html .= '<th style="width: 50%;">Comentario</th>';
+                        $html .= '</tr>';
+                    } else {
+                        $html .= '<tr>';
+                        $html .= '<th class="has-text-left" style="width: 25%;">Nombre y Apellidos</th>';
+                        $html .= '<th style="width: 15%;">Calificación</th>';
+                        $html .= '<th>Comentario</th>';
+                        $html .= '</tr>';
+                    }
                     $html .= '</thead>';
                     $html .= '<tbody>';
                     foreach ($grades as $g) {
-                        $html .= '<tr>';
-                        $html .= '<td>' . $g['firstname'] . ' ' . $g['lastname'] . '</td>';
-                        $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
-                        $hasFeedback = $dataFeedback->hasFeedbackCidead($g['userid'], $course['CursoId']);
-                        if ((int)$hasFeedback['cuenta'] == 1) {
-                            $html .= '<td style="text-align: justify;">' . $dataFeedback->getFeedbackCidead($trim, $campus, $group, $course['CursoId'], $g['userid'])['feedback_cidead'] . '</td>';
+                        if (($campus == 'eso') || ($campus == 'bach')) {
+                            $html .= '<tr>';
+                            $html .= '<td>' . $g['firstname'] . ' ' . $g['lastname'] . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['U1_NotaFinal'], 1) . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['U2_NotaFinal'], 1) . '</td>';
+                            if (in_array($course['CursoId'], array_column((array)$coursesWithU3, 'courseid'))) {
+                                $html .= '<td class="has-text-centered">' . round($g['U3_NotaFinal'], 1) . '</td>';
+                            }
+                            if (in_array($course['CursoId'], array_column((array)$coursesWithU4, 'courseid'))) {
+                                $html .= '<td class="has-text-centered">' . round($g['U4_NotaFinal'], 1) . '</td>';
+                            }
+                            if (in_array($course['CursoId'], array_column((array)$coursesWithU5, 'courseid'))) {
+                                $html .= '<td class="has-text-centered">' . round($g['U5_NotaFinal'], 1) . '</td>';
+                            }
+                            $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
+                            $hasFeedback = $dataFeedback->hasFeedbackCidead($g['userid'], $course['CursoId']);
+                            if ($hasFeedback['cuenta'] == 1) {
+                                $html .= '<td style="text-align: justify;">' . $dataFeedback->getFeedbackCidead($trim, $campus, $group, (int)$course['CursoId'], $g['userid'])['feedback_cidead'] . '</td>';
+                            } else {
+                                $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
+                            }
+                            $html .= '</tr>';
                         } else {
-                            $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
+                            $html .= '<tr>';
+                            $html .= '<td>' . $g['firstname'] . ' ' . $g['lastname'] . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
+                            $hasFeedback = $dataFeedback->hasFeedbackCidead($g['userid'], $course['CursoId']);
+                            if ((int)$hasFeedback['cuenta'] == 1) {
+                                $html .= '<td style="text-align: justify;">' . $dataFeedback->getFeedbackCidead($trim, $campus, $group, $course['CursoId'], $g['userid'])['feedback_cidead'] . '</td>';
+                            } else {
+                                $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
+                            }
+                            $html .= '</tr>';
                         }
-                        $html .= '</tr>';
                     }
                     $html .= '</tbody>';
                     $html .= '</table>';

@@ -146,7 +146,7 @@
                             </td>
                             <td spellcheck="true" contenteditable="true" title="Al dar clic se marcan los errores ortográficos si hubiera alguno, para editar el comentario de clic en el botón Editar.">
                                 <!-- Se muestra el comentario al CIDEAD -->
-                                <p> <?= $feedback['feedback_cidead'] ?> </p>
+                                <p> <?= (isset($feedback)) ? $feedback['feedback_cidead'] : ''; ?> </p>
                             </td>
                             <td>
                                 <div class="level">
@@ -194,7 +194,7 @@
                             </td>
                             <td spellcheck="true" contenteditable="true" title="Al dar clic se marcan los errores ortográficos si hubiera alguno, para editar el comentario de clic en el botón Editar.">
                                 <!-- Se muestra el comentario al CIDEAD -->
-                                <p> <?= $feedback['feedback_cidead'] ?> </p>
+                                <p> <?= (isset($feedback)) ? $feedback['feedback_cidead'] : ''; ?> </p>
                             </td>
                             <td>
                                 <div class="level">
