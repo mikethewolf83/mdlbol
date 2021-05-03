@@ -630,7 +630,7 @@ class GradesController extends AbstractController
                 $html .= '<h5 id="trimText" class="subtitle is-5 has-text-dark"><b>' . $trimText  . '</b></h5>';
                 $html .= '<h5 id="courseText" class="subtitle is-6 has-text-dark">' . $courseText  . '</h5>';
                 $html .= '<h5 id="groupText" class="subtitle is-6 has-text-dark">' . $groupText  . '</h5>';
-                $html .= '<table class="table">';
+                $html .= '<table class="table is-fullwidth">';
                 $html .= '<thead>';
                 if (($campus == 'eso') || ($campus == 'bach')) {
                     $html .= '<tr>';
@@ -788,7 +788,7 @@ class GradesController extends AbstractController
                 $html .= '<h5 id="trimText" class="subtitle is-5 has-text-dark"><b>' . $trimText  . '</b></h5>';
                 $html .= '<h5 id="studText" class="subtitle is-6 has-text-dark">' . $studText  . '</h5>';
                 $html .= '<h5 id="groupText" class="subtitle is-6 has-text-dark">' . $groupText  . '</h5>';
-                $html .= '<table class="table">';
+                $html .= '<table class="table is-fullwidth">';
                 $html .= '<thead>';
                 if (($campus == 'eso') || ($campus == 'bach')) {
                     $html .= '<tr>';
