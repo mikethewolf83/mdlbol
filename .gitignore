@@ -1,5 +1,6 @@
 composer.lock
 database/internal.sqlite3
+pdf/*
 cache/*
 vendor
 .env

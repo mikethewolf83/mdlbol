@@ -34,6 +34,17 @@
                 </div>
             </form>
         </div>
+        <div class="block">
+            <p class="has-text-centered">
+                ¿Prefieres acceder por una versión móvil?
+            </p>
+            <p class="has-text-centered">
+                Descarga la aplicación para dispositivos Android desde aquí...
+            </p>
+            <p class="has-text-centered">
+                <a title="Descargar aplicación para dispositivos Android" href="<?= $_ENV['BASE_URL'] . '/assets/net.ceehabana.mdlbol.apk'; ?>" target="_blank" class="button is-rounded is-inverted is-info" rel="noopener noreferrer"><i class="mx-1" data-icon="g"></i></a>
+            </p>
+        </div>
     </div>
     <div class="column"></div>
 </div>
