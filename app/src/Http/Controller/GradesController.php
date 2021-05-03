@@ -763,9 +763,6 @@ class GradesController extends AbstractController
                 $studText = '<b>Estudiante:</b> ' . $data->getStudentName($student)['username'];
                 $groupText = '<b>Grupo:</b> ' . $group;
                 $title = 'CEEH ' . $trimText . ' ' . $data->getStudentName($student)['username'];
-                $coursesWithU5 = $data->getCoursesWithU5($trim);
-                $coursesWithU4 = $data->getCoursesWithU4($trim);
-                $coursesWithU3 = $data->getCoursesWithU3($trim);
 
                 $html = '<html>';
                 $html .= '<head>';
@@ -804,17 +801,15 @@ class GradesController extends AbstractController
                     $html .= '<th>Calificación</th>';
                     $html .= '<th style="width: 50%;">Comentario</th>';
                     $html .= '</tr>';
-                    $html .= '</thead>';
-                    $html .= '<tbody>';
                 } else {
                     $html .= '<tr>';
                     $html .= '<th class="has-text-left" style="width: 25%;">Asignatura</th>';
                     $html .= '<th style="width: 15%;">Calificación</th>';
                     $html .= '<th>Comentario</th>';
                     $html .= '</tr>';
-                    $html .= '</thead>';
-                    $html .= '<tbody>';
                 }
+                $html .= '</thead>';
+                $html .= '<tbody>';
                 foreach ($grades as $g) {
                     if (($campus == 'eso') || ($campus == 'bach')) {
                         $html .= '<tr>';
@@ -1172,19 +1167,57 @@ class GradesController extends AbstractController
                     $html .= '<h5 id="groupText" class="subtitle is-6 has-text-dark">' . $groupText  . '</h5>';
                     $html .= '<table class="table is-fullwidth">';
                     $html .= '<thead>';
-                    $html .= '<tr>';
-                    $html .= '<th class="has-text-left" style="width: 25%;">Asignatura</th>';
-                    $html .= '<th style="width: 15%;">Calificación</th>';
-                    $html .= '<th>Comentario</th>';
-                    $html .= '</tr>';
+                    if (($campus == 'eso') || ($campus == 'bach')) {
+                        $html .= '<tr>';
+                        $html .= '<th class="has-text-left" style="width: 20%;">Asignatura</th>';
+                        $html .= '<th class="has-text-centered">U1</th>';
+                        $html .= '<th class="has-text-centered">U2</th>';
+                        $html .= '<th class="has-text-centered">U3</th>';
+                        $html .= '<th class="has-text-centered">U4</th>';
+                        $html .= '<th class="has-text-centered">U5</th>';
+                        $html .= '<th>Calificación</th>';
+                        $html .= '<th style="width: 50%;">Comentario</th>';
+                        $html .= '</tr>';
+                    } else {
+                        $html .= '<tr>';
+                        $html .= '<th class="has-text-left" style="width: 25%;">Asignatura</th>';
+                        $html .= '<th style="width: 15%;">Calificación</th>';
+                        $html .= '<th>Comentario</th>';
+                        $html .= '</tr>';
+                    }
                     $html .= '</thead>';
                     $html .= '<tbody>';
                     foreach ($grades as $g) {
-                        $html .= '<tr>';
-                        $html .= '<td>' . $g['Curso'] . '</td>';
-                        $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
-                        $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
-                        $html .= '</tr>';
+                        if (($campus == 'eso') || ($campus == 'bach')) {
+                            $html .= '<tr>';
+                            $html .= '<td>' . $g['Curso'] . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['U1_NotaFinal'], 1) . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['U2_NotaFinal'], 1) . '</td>';
+                            if ((NULL != $g['U3_NotaFinal'])) {
+                                $html .= '<td class="has-text-centered">' . round($g['U3_NotaFinal'], 1) . '</td>';
+                            } else {
+                                $html .= '<td class="has-text-centered">-</td>';
+                            }
+                            if ((NULL != $g['U4_NotaFinal'])) {
+                                $html .= '<td class="has-text-centered">' . round($g['U4_NotaFinal'], 1) . '</td>';
+                            } else {
+                                $html .= '<td class="has-text-centered">-</td>';
+                            }
+                            if ((NULL != $g['U5_NotaFinal'])) {
+                                $html .= '<td class="has-text-centered">' . round($g['U5_NotaFinal'], 1) . '</td>';
+                            } else {
+                                $html .= '<td class="has-text-centered">-</td>';
+                            }
+                            $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
+                            $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
+                            $html .= '</tr>';
+                        } else {
+                            $html .= '<tr>';
+                            $html .= '<td>' . $g['Curso'] . '</td>';
+                            $html .= '<td class="has-text-centered">' . round($g['NotaTrimestre'], 1) . '</td>';
+                            $html .= '<td style="text-align: justify;">' . $g['TrimestreObservaciones'] . '</td>';
+                            $html .= '</tr>';
+                        }
                     }
                     $html .= '</tbody>';
                     $html .= '</table>';
